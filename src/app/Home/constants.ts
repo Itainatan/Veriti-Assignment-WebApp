@@ -1,4 +1,4 @@
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 
 const COLUMNS: GridColDef[] = [
   { field: "ip", headerName: "IP Address", flex: 1 },
