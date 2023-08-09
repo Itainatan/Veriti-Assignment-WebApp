@@ -1,12 +1,27 @@
 import { Button, CircularProgress, Toolbar, Typography } from "@mui/material";
-import TextField from "@mui/material/TextField";
+import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { DataGridPro, DataGridProProps } from '@mui/x-data-grid-pro';
 import { AppBar, } from "@src/common-components";
 import * as styles from "./styles";
 import useHome from "./hooks";
 
+const columns: GridColDef[] = [
+  { field: 'ip', headerName: 'IP Address', flex: 1, },
+  {
+    field: 'CVEs found',
+    headerName: 'CVEs found',
+    sortable: true,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) =>
+      `${params.row.vulnerabilities.length || ''}`,
+  },
+];
+
+
+
 const Home = () => {
-  const { onSubmit, isLoading, register, data, history, setData } =
-    useHome();
+  const { isLoading, data,   setPage,
+    page,} = useHome();
 
   return (
     <div css={styles.container}>
@@ -17,59 +32,32 @@ const Home = () => {
           }}
         >
           <Typography component="h1" variant="h6" color="inherit" noWrap>
-            EasyWay - Wether App
+            Veriti - Data App
           </Typography>
         </Toolbar>
       </AppBar>
 
       <div css={styles.card}>
-        <form onSubmit={onSubmit} style={{
-          display: 'flex',
-          height: 'min-content',
-        }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            label="type locations"
-            css={styles.input}
-            {...register("search", {
-              required: "Password is required",
-            })}
-          />
-          {isLoading ? (
-            <CircularProgress color="inherit" />
-          ) : (
-            <Button type="submit" variant="contained" css={styles.submitButton} onClick={onSubmit}>
-              search
-            </Button>
-          )}
-        </form>
-
-        <div css={styles.dataContainer}>
-          <ul>
-            <h1>History:</h1>
-            {history?.map((city, index) => {
-              return (
-                <li key={index} style={{ marginBottom: '10px' }} onClick={() => setData([city])}>
-                  <h3>{city?.name ?? city?.data?.name}</h3>
-                </li>
-              )
-            })}
-          </ul>
-
-          <ul>
-            <h1>Data From Search:</h1>
-            {data.map((city, index) => {
-              return(
-                <li key={index}>
-                  <h3>{city?.name}</h3>
-                  <h4>current weather - {city?.data?.current?.cloud}</h4>
-                </li>
-              )
-            })}
-          </ul>
-        </div>
+        {isLoading ? (
+          <CircularProgress color="inherit" />
+        ) : (
+          <div style={{ height: '75vh', width: '100%' }}>
+            <DataGrid
+              rows={data}
+              columns={columns}
+              // initialState={{
+              //   pagination: {
+              //     paginationModel: { page: 0, pageSize: 10 },
+              //   },
+              // }}
+              // pageSizeOptions={[10]}
+              // onRowsScrollEnd={() => {}}
+              getRowId={(row) => row.ip}
+              hideFooter={true}
+              checkboxSelection={false}
+            />
+          </div>
+        )}
 
       </div>
     </div>

@@ -24,6 +24,7 @@ export const card = css`
   flex-direction: column;
   margin-top: 10vh;
   padding: 50px;
+  width: 100%;
 `;
 
 export const input = css`

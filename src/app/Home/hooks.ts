@@ -1,63 +1,32 @@
-import { useCallback, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
-type FormValues = {
-  search: string;
-};
-
 const useHome = () => {
-  const [history, setHistory] = useState<any[]>([]);
   const [data, setData] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchHistory = async () => {
-      const { data } = await axios.get(`http://localhost:8000/get-history`);
-
-      setHistory(data.data);
+      try {
+        setIsLoading(true);
+        const { data } = await axios.get(
+          `http://74.234.252.116:3000/api/ip-to-vulnerabilities?page=${page}&size=10`
+        );
+        setData(data);
+        setIsLoading(false);
+      } catch (error) {}
     };
 
     fetchHistory();
-  }, []);
-
-  const onClickCity = useCallback(() => {}, []);
-
-  const { handleSubmit, getValues, register } = useForm<FormValues>();
-
-  const onSubmit = useCallback(async () => {
-    try {
-      setIsLoading(true);
-
-      const { search } = getValues();
-
-      const cities = search.split(",");
-
-      const data: any = await Promise.all(
-        cities.map(async (city) => {
-          const cityData = await axios.get(
-            `http://localhost:8000/get-weather/${city}`
-          );
-          return cityData.data;
-        })
-      );
-
-      setHistory([...history, ...data].slice(-10));
-      setData(data);
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-    }
-  }, [history]);
+  }, [page]);
 
   return {
-    onClickCity,
-    onSubmit: handleSubmit(onSubmit),
     isLoading,
-    register,
     data,
-    history,
     setData,
+    setPage,
+    page,
   };
 };
 
