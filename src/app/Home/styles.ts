@@ -25,6 +25,7 @@ export const card = css`
   margin-top: 10vh;
   padding: 50px;
   width: 100%;
+  height: 75vh;
 `;
 
 export const input = css`
