@@ -35,7 +35,7 @@ const Home = () => {
   ];
 
   const ITEM_COLUMNS: GridColDef[] = [
-    { field: "number", headerName: "#", flex: 1 },
+    { field: "number", headerName: "#", flex: 1, renderCell: (index)=>index.api.getRowIndexRelativeToVisibleRows(index.row) + 1  },
     {
       field: "CVEs found",
       headerName: "Industry Reference",
