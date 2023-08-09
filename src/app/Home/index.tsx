@@ -40,13 +40,6 @@ const Home = () => {
           <DataGrid
             rows={data}
             columns={columns}
-            // initialState={{
-            //   pagination: {
-            //     paginationModel: { page: 0, pageSize: 10 },
-            //   },
-            // }}
-            // pageSizeOptions={[10]}
-            // onRowsScrollEnd={() => {}}
             loading={isLoading}
             columnBuffer={2} columnThreshold={2}
             getRowId={(row) => row.ip}
