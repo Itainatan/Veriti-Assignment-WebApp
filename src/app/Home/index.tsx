@@ -1,6 +1,5 @@
-import { Button, CircularProgress, Toolbar, Typography } from "@mui/material";
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-import { DataGridPro, DataGridProProps } from '@mui/x-data-grid-pro';
+import { Toolbar, Typography } from "@mui/material";
+import { DataGrid, GridColDef, GridValueGetterParams,  } from '@mui/x-data-grid';
 import { AppBar, } from "@src/common-components";
 import * as styles from "./styles";
 import useHome from "./hooks";
@@ -20,8 +19,7 @@ const columns: GridColDef[] = [
 
 
 const Home = () => {
-  const { isLoading, data,   setPage,
-    page,} = useHome();
+  const { isLoading, data, } = useHome();
 
   return (
     <div css={styles.container}>
@@ -38,26 +36,25 @@ const Home = () => {
       </AppBar>
 
       <div css={styles.card}>
-        {isLoading ? (
-          <CircularProgress color="inherit" />
-        ) : (
-          <div style={{ height: '75vh', width: '100%' }}>
-            <DataGrid
-              rows={data}
-              columns={columns}
-              // initialState={{
-              //   pagination: {
-              //     paginationModel: { page: 0, pageSize: 10 },
-              //   },
-              // }}
-              // pageSizeOptions={[10]}
-              // onRowsScrollEnd={() => {}}
-              getRowId={(row) => row.ip}
-              hideFooter={true}
-              checkboxSelection={false}
-            />
-          </div>
-        )}
+        <div style={{ height: '75vh', width: '100%' }}>
+          <DataGrid
+            rows={data}
+            columns={columns}
+            // initialState={{
+            //   pagination: {
+            //     paginationModel: { page: 0, pageSize: 10 },
+            //   },
+            // }}
+            // pageSizeOptions={[10]}
+            // onRowsScrollEnd={() => {}}
+            loading={isLoading}
+            columnBuffer={2} columnThreshold={2}
+            getRowId={(row) => row.ip}
+            hideFooter={true}
+            checkboxSelection={false}
+          />
+        </div>
+        {/* )} */}
 
       </div>
     </div>
