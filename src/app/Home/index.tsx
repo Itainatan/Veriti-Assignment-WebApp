@@ -41,7 +41,6 @@ const Home = () => {
             rows={data}
             columns={columns}
             loading={isLoading}
-            columnBuffer={2} columnThreshold={2}
             getRowId={(row) => row.ip}
             hideFooter={true}
             checkboxSelection={false}
