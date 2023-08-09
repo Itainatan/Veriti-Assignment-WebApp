@@ -47,8 +47,6 @@ const Home = () => {
             checkboxSelection={false}
           />
         </div>
-        {/* )} */}
-
       </div>
     </div>
   );
