@@ -4,10 +4,12 @@ import axios from "axios";
 const useHome = () => {
   const [data, setData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [item, setItem] = useState(null);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10,
   });
+
 
   useEffect(() => {
     fetchHistory();
@@ -19,6 +21,7 @@ const useHome = () => {
       const { data } = await axios.get(
         `http://74.234.252.116:3000/api/ip-to-vulnerabilities?page=${paginationModel.page}&size=10`
       );
+
       setData(data);
       setIsLoading(false);
     } catch (error) {}
@@ -30,6 +33,8 @@ const useHome = () => {
     setData,
     paginationModel,
     setPaginationModel,
+    item,
+    setItem,
   };
 };
 

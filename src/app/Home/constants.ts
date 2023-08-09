@@ -1,6 +1,6 @@
 import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 
-const COLUMNS: GridColDef[] = [
+const DEFAULT_COLUMNS: GridColDef[] = [
   { field: "ip", headerName: "IP Address", flex: 1 },
   {
     field: "CVEs found",
@@ -12,4 +12,4 @@ const COLUMNS: GridColDef[] = [
   },
 ];
 
-export { COLUMNS };
+export { DEFAULT_COLUMNS };
